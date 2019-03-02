@@ -4,6 +4,7 @@ import logging
 import click
 from firstGraphProject.node.node import Node
 from firstGraphProject.graph_model.graph import Graph
+from firstGraphProject.tgf_parser.parser import Parser
 
 console = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -24,20 +25,11 @@ _/ ___\\__  \\_  __ \  |  /  _ \/  ___//     \\__  \\   __\/  _ \/  ___/
  \___  >____  /__|  |____/\____/____  >__|_|  (____  /__|  \____/____  >
      \/     \/                      \/      \/     \/                \/ 
      """)
-    node1 = Node(1, 3)
-    node2 = Node(12, 13)
-    node3 = Node(22, 100)
     graph = Graph()
-    graph.add_node(node1, node2, node3)
-    print('Graphs name is {}'.format(name))
-    graph.connect(node1, node2)
-    graph.connect(node2, node3)
-    for edge in graph.allEdges:
-        edge.__str__()
-    graph.disconnect(node1, node2)
-    print('After removal:')
-    for edge in graph.allEdges:
-        edge.__str__()
+    parser = Parser()
+    parser.parse_tgf_file(graph)
+    for node in graph.allNodes:
+        node.__str__()
 
 
 if __name__ == "__main__":
