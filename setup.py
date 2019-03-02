@@ -1,14 +1,29 @@
-from setuptools import setup
+#!/usr/bin/env python
+
+from setuptools import setup, find_packages
+
+version = '0.1dev'
+
+with open('README.md') as f:
+    readme = f.read()
+
+with open('LICENSE') as f:
+    license = f.read()
+
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
 
 setup(
-    name='firstGraphProject',
-    version='1.0',
-    packages=['scripts',
-              'firstGraphProject.edge', 'firstGraphProject.node', 'firstGraphProject.graph_model'],
-    url='https://github.com/Imipenem/GraphsStructurewithPython',
-    license='',
-    author='Bitconnect',
-    author_email='',
-    description='',
-    scripts=['scripts/main.py']
+    name='carlosmatos',
+    version=version,
+    description='Template for python based projects',
+    long_description=readme,
+    keywords=['test'],
+    author='Carlos Matos',
+    author_email='caros.matos@jesus-live.com',
+    license=license,
+    scripts=['scripts/carlosmatos'],
+    install_requires=required,
+    packages=find_packages(exclude='docs'),
+    include_package_data=True
 )

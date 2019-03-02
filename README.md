@@ -1,6 +1,31 @@
-# GraphsStructurewithPython
-My first, small python project. Within this small exercise project, I try to implement a graph structure
-with nodes and edges. I´ll also provide a TGF Parser/Reader for proper input. Maybe there will be some small 
-graphical representation just for fun. 
+[![Build Status](https://travis-ci.org/Zethson/PythonProjectTemplate.svg?branch=master)](https://travis-ci.org/Zethson/PythonProjectTemplate)
+[![codecov](https://codecov.io/gh/Zethson/PythonProjectTemplate/branch/master/graph/badge.svg)](https://codecov.io/gh/Zethson/PythonProjectTemplate)
 
-I´ll use the 'Click'-library for CLI-parsing.
+# Python project template
+Person template for python based projects. 
+
+Quick Setup for developers
+=====
+1. <code>git clone https://github.com/Zethson/PythonProjectTemplate</code>
+2. <code>python setup.py install</code>
+3. <code>template</code>
+
+Usage
+=====
+## The CLI - Command Line Interface
+```bash
+> template
+```
+
+Examples
+=====
+-
+
+License
+=====
+MIT
+
+Authors
+=====
+Lukas Heumos
+
