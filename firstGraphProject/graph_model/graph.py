@@ -1,5 +1,5 @@
-from edge import Edge
-from node import Node
+from firstGraphProject.edge.edge import Edge
+from firstGraphProject.node.node import Node
 
 
 class Graph:

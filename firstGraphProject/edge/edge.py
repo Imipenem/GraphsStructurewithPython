@@ -1,4 +1,4 @@
-from node import Node
+from firstGraphProject.node.node import Node
 
 
 class Edge:

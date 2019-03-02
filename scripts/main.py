@@ -1,6 +1,6 @@
 import click
-from node import Node
-from graph import Graph
+from firstGraphProject.node.node import Node
+from firstGraphProject.graph_model.graph import Graph
 
 
 # @click.command()
