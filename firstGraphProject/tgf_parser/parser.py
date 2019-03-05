@@ -46,12 +46,9 @@ class Parser:
         Nodes and Edges are separated by a #. When # is reached, the (but possibly there will be no connections at all)
         the read_edges() will be invoked.
         Edge Format: [identifier of source_node] [identifier of target_node]
-        TODO: read_edges()!!!!
 
                 Parameters
                 ----------
-                node_line : str
-                    this string represents a node consisting of the identifier followed by the value separated by space
                 graph : Graph
                     this is the fundamental graph to be parsed from the TGF-file
         """
@@ -62,8 +59,36 @@ class Parser:
         for line in lines:
             if line == "#\n":
                 delimiter_reached = True
+                continue
             if delimiter_reached:
-                print("delimeter reached")
-                # readEdges(line)
+                Parser.read_edges(line, graph)
             else:
                 Parser.read_nodes(line, graph)
+
+    @staticmethod
+    def read_edges(edge_line, graph: Graph):
+        """
+            This method parses the TGF representation of an edge.
+            Note: The common format for the nodes can be found at the read_nodes() docstring.
+
+            After reaching the delimiter ("#"), this method will parse the TGF representation of an edge and connect
+            the corresponding nodes.
+            Edge Format: [identifier of source_node] [identifier of target_node]
+
+                    Parameters
+                    ----------
+                    edge_line:str
+                        the
+                    graph : Graph
+                        this is the fundamental graph to be parsed from the TGF-file
+            """
+        edge_line_splitted = edge_line.split()
+        source_node = None
+        target_node = None
+        for node in graph.allNodes:
+            if node.identifier == edge_line_splitted[0]:
+                source_node = node
+            elif node.identifier == edge_line_splitted[1]:
+                target_node = node
+        if source_node is not None and target_node is not None:
+            graph.connect(source_node, target_node)
