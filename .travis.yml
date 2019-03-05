@@ -24,6 +24,6 @@ after_success:
 notifications:
   email:
     recipients:
-      - carlos.matos@jesus-live.com
+      - philipp_ehm@protonmail.com
     on_success: never
     on_failure: always

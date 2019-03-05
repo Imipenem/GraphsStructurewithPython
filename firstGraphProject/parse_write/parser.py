@@ -1,5 +1,5 @@
-from firstGraphProject.graph_model.graph import Graph
-from firstGraphProject.node.node import Node
+from firstGraphProject.model.graph import Graph
+from firstGraphProject.model.node import Node
 
 
 class Parser:
@@ -38,7 +38,7 @@ class Parser:
         graph.add_node(new_node)
 
     @staticmethod
-    def parse_tgf_file(graph: Graph):
+    def parse_tgf_file(graph: Graph, path):
         """
         This method parses the whole file to create nodes and connect them.
         The common format for the nodes can be found at the read_nodes() docstring.
@@ -49,10 +49,12 @@ class Parser:
 
                 Parameters
                 ----------
+                path:
+                    the path (as a command line parameter) specifies the files location
                 graph : Graph
                     this is the fundamental graph to be parsed from the TGF-file
         """
-        f = open("/Users/MyUsername/PycharmProjects/firstGraphProject/data/tgf_graph_structure.txt", 'r')
+        f = open(path, 'r')
         delimiter_reached = False
 
         lines = f.readlines()

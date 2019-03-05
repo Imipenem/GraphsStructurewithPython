@@ -2,9 +2,8 @@
 import logging
 
 import click
-from firstGraphProject.node.node import Node
-from firstGraphProject.graph_model.graph import Graph
-from firstGraphProject.tgf_parser.parser import Parser
+from firstGraphProject.model.graph import Graph
+from firstGraphProject.parse_write.parser import Parser
 
 console = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -15,19 +14,19 @@ LOG.setLevel(logging.INFO)
 
 
 @click.command()
-@click.option('--name', default='DummyName', prompt="Enter a graphs name")
-def main(name):
+@click.option('--tgf', default='', prompt="Please enter the files location:")
+def main(tgf):
     LOG.info("""
-                        .__                               __                
-  ____ _____ _______|  |   ____  ______ _____ _____ _/  |_  ____  ______
-_/ ___\\__  \\_  __ \  |  /  _ \/  ___//     \\__  \\   __\/  _ \/  ___/
-\  \___ / __ \|  | \/  |_(  <_> )___ \|  Y Y  \/ __ \|  | (  <_> )___ \ 
- \___  >____  /__|  |____/\____/____  >__|_|  (____  /__|  \____/____  >
-     \/     \/                      \/      \/     \/                \/ 
+    ________                    .__   __________                                   
+ /  _____/___________  ______ |  |__\______   \_____ _______  ______ ___________ 
+/   \  __\_  __ \__  \ \____ \|  |  \|     ___/\__  \\_  __ \/  ___// __ \_  __ \
+\    \_\  \  | \// __ \|  |_> >   Y  \    |     / __ \|  | \/\___ \\  ___/|  | \/
+ \______  /__|  (____  /   __/|___|  /____|    (____  /__|  /____  >\___  >__|   
+        \/           \/|__|        \/               \/           \/     \/      
      """)
     graph = Graph()
     parser = Parser()
-    parser.parse_tgf_file(graph)
+    parser.parse_tgf_file(graph, tgf.__str__())
     for node in graph.allNodes:
         node.__str__()
 

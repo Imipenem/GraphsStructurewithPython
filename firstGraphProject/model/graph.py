@@ -1,5 +1,5 @@
-from firstGraphProject.edge.edge import Edge
-from firstGraphProject.node.node import Node
+from firstGraphProject.model.edge import Edge
+from firstGraphProject.model.node import Node
 
 
 class Graph:
@@ -44,7 +44,7 @@ class Graph:
         """
         for node in nodes:
             if self.allNodes.__contains__(node):
-                print('Already added this node to the graph')
+                print('Already added node {} to the graph'.format(node.identifier))
             else:
                 self.allNodes.append(node)
 
@@ -64,13 +64,15 @@ class Graph:
                         this will be the target node for the new connection
         """
         if source_node is dest_node:
-            raise ValueError("Source and target node cannot be the same node!")
+            raise ValueError("Node {} and Node {} are the same nodes; they cannot be connected".format(
+                source_node.identifier, dest_node.identifier))
         elif self.has_connection(source_node, dest_node):
-            raise ValueError("These nodes are already connected")
+            raise ValueError("Node {} and Node {} are already connected".format(source_node.identifier,
+                                                                                dest_node.identifier))
         else:
             new_edge = Edge(source_node, dest_node)
-            source_node.outEdges.append(new_edge)
-            dest_node.incEdges.append(new_edge)
+            source_node.out_edges.append(new_edge)
+            dest_node.inc_edges.append(new_edge)
             self.allEdges.append(new_edge)
 
     def has_connection(self, source: Node, target: Node):
@@ -103,12 +105,13 @@ class Graph:
                                 the target node to be disconnected from the source node
         """
         if not self.has_connection(source, target):
-            raise ValueError("These nodes aren´t connected!")
+            raise ValueError("Error while disconnecting: Node {} and Node {} are not connected".format(
+                source.identifier, target.identifier))
         else:
             for edge in self.allEdges:
                 if edge.source is source and edge.destination is target or edge.source is target and edge.destination \
                         is source:
                     self.allEdges.remove(edge)
-                    source.outEdges.remove(edge) if source is edge.source else source.incEdges.remove(edge)
-                    target.incEdges.remove(edge) if target is edge.destination else target.outEdges.remove(edge)
+                    source.out_edges.remove(edge) if source is edge.source else source.inc_edges.remove(edge)
+                    target.inc_edges.remove(edge) if target is edge.destination else target.out_edges.remove(edge)
                     break

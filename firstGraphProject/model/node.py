@@ -34,8 +34,8 @@ class Node:
         """
         self.identifier = identifier
         self.value = value
-        self.incEdges = inc_edges if inc_edges is not None else list()
-        self.outEdges = out_edges if out_edges is not None else list()
+        self.inc_edges = inc_edges if inc_edges is not None else list()
+        self.out_edges = out_edges if out_edges is not None else list()
 
     def __str__(self):
         """
@@ -45,8 +45,8 @@ class Node:
         """
         print('This is node {} and my value is {}'.format(self.identifier, self.value))
         print('My incoming edges are:')
-        for edge in self.incEdges:
+        for edge in self.inc_edges:
             edge.__str__()
         print('My outgoing edges are:')
-        for edge in self.outEdges:
+        for edge in self.out_edges:
             edge.__str__()
