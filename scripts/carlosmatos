@@ -2,6 +2,10 @@
 import logging
 
 import click
+import pandas as pd
+import numpy as np
+import networkx as nx
+import matplotlib.pyplot as plt
 from firstGraphProject.model.graph import Graph
 from firstGraphProject.parse_write.parser import Parser
 from firstGraphProject.parse_write.writer import Writer
@@ -31,6 +35,21 @@ def main(parse, write):
     writer = Writer()
     parser.parse_tgf_file(graph, parse.__str__())
     writer.write_to_tgf(graph, write)
+
+    # Build a dataframe with your connections
+    df = pd.DataFrame({'from': ['A', 'B', 'C', 'A'], 'to': ['D', 'A', 'E', 'C']})
+
+    # Build your graph
+    g = nx.from_pandas_edgelist(df, 'from', 'to', create_using=nx.Graph())
+
+    # Custom the nodes:
+    fig = plt.figure()
+    nx.draw_networkx(g, with_labels=True, node_color='skyblue', node_size=1500, edge_color='white')
+    fig.set_facecolor("#00000F")
+    plt.show()
+
+    # If you want to save the figure to png:
+    # plt.savefig('yourname.png', facecolor=fig.get_facecolor() )
 
 
 if __name__ == "__main__":
