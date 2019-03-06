@@ -4,6 +4,7 @@ import logging
 import click
 from firstGraphProject.model.graph import Graph
 from firstGraphProject.parse_write.parser import Parser
+from firstGraphProject.parse_write.writer import Writer
 
 console = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -14,8 +15,9 @@ LOG.setLevel(logging.INFO)
 
 
 @click.command()
-@click.option('--tgf', default='', prompt="Please enter the files location:")
-def main(tgf):
+@click.option('--parse', default='', prompt="Please enter graphs tgf file´s location for parsing:")
+@click.option('--write', default='', prompt="Please enter the graphs tgf file´s location:")
+def main(parse, write):
     LOG.info("""
     ________                    .__   __________                                   
  /  _____/___________  ______ |  |__\______   \_____ _______  ______ ___________ 
@@ -26,9 +28,9 @@ def main(tgf):
      """)
     graph = Graph()
     parser = Parser()
-    parser.parse_tgf_file(graph, tgf.__str__())
-    for node in graph.allNodes:
-        node.__str__()
+    writer = Writer()
+    parser.parse_tgf_file(graph, parse.__str__())
+    writer.write_to_tgf(graph, write)
 
 
 if __name__ == "__main__":

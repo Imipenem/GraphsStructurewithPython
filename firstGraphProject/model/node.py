@@ -17,7 +17,7 @@ class Node:
             -------
             __str__()
                 Override the __str()__ for proper textual representation of a node
-            """
+    """
 
     def __init__(self, identifier, value, inc_edges=None, out_edges=None):
         """

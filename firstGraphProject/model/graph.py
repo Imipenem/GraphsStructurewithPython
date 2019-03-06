@@ -4,19 +4,19 @@ from firstGraphProject.model.node import Node
 
 class Graph:
     """
-    A class used to represent a Graph
+            A class used to represent a Graph
 
-    Attributes
-    ----------
-    allEdges : list
-       this list contains all edges of this graph
-    allNodes : list
-        this list contains all nodes of this graph
+            Attributes
+            ----------
+            allEdges : list
+                this list contains all edges of this graph
+            allNodes : list
+                this list contains all nodes of this graph
 
-    Methods
-    -------
-    add_node(*nodes=Node)
-        This method adds several nodes to the graph
+            Methods
+            -------
+            add_node(*nodes=Node)
+                this method adds several nodes to the graph
     """
 
     def __init__(self, all_edges=None, all_nodes=None):
