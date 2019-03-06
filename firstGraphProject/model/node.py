@@ -1,3 +1,7 @@
+from dataclasses import dataclass, field
+
+
+@dataclass()
 class Node:
     """
             A class used to represent a Node
@@ -19,23 +23,10 @@ class Node:
                 Override the __str()__ for proper textual representation of a node
     """
 
-    def __init__(self, identifier, value, inc_edges=None, out_edges=None):
-        """
-                Parameters
-                ----------
-                identifier : int
-                   A unique identifier of the node
-                value : String
-                   The value the node is holding
-                inc_edges : list
-                   This list holds all the incoming edges to the node
-                out_edges : list
-                   This list holds all the outgoing edges from the node
-        """
-        self.identifier = identifier
-        self.value = value
-        self.inc_edges = inc_edges if inc_edges is not None else list()
-        self.out_edges = out_edges if out_edges is not None else list()
+    identifier: int
+    value: str
+    inc_edges: list = field(default_factory=list)
+    out_edges: list = field(default_factory=list)
 
     def __str__(self):
         """

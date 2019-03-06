@@ -1,15 +1,17 @@
 from firstGraphProject.model.node import Node
+from dataclasses import dataclass, field
 
 
+@dataclass()
 class Edge:
     """
         A class used to represent an Edge
 
         Attributes
         ----------
-        source : list
+        source : Node
            the edges´ source node
-        destination : list
+        destination : Node
             the edges´ destination node
 
         Methods
@@ -18,18 +20,9 @@ class Edge:
             Override the __str()__ for proper textual representation of an edge
         """
 
-    def __init__(self, source: Node, destination: Node):
-        """
-                Parameters
-                ----------
-                source : str
-                    the edges´ source node
-                destination : str
-                    the edges´ destination node
-        """
-        self.source = source
-        self.destination = destination
-        self.label = "connecting node {} with node {}".format(source.identifier, destination.identifier)
+    source: Node = field(default_factory=Node)
+    destination: Node = field(default_factory=Node)
+    label: str = ""
 
     def __str__(self):
         """
@@ -38,4 +31,5 @@ class Edge:
                 Parameters
                 ----------
         """
-        print(self.label)
+        label = "connecting node {} with node {}".format(self.source.identifier, self.destination.identifier)
+        return label
