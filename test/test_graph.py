@@ -4,8 +4,6 @@ import unittest
 from firstGraphProject.model.graph import Graph
 from firstGraphProject.model.edge import Edge
 from firstGraphProject.model.node import Node
-from firstGraphProject.parse_write.parser import Parser
-from firstGraphProject.parse_write.writer import Writer
 
 
 class TestGraph(unittest.TestCase):
@@ -146,3 +144,128 @@ class TestGraph(unittest.TestCase):
         test_graph.connect(test_node_1, test_node_2)
         with self.assertRaises(ValueError):
             test_graph.connect(test_node_2, test_node_1)
+
+    def test_has_connection_false(self):
+        """ Check if hasConnection() returns false for nodes that aren´t connected
+
+                    Fails if not present: Nothing
+                    Warns if not present: Nothing
+        """
+        test_node_1 = Node(1, 'Node1')
+        test_node_2 = Node(2, 'Node2')
+        test_graph = Graph()
+        self.assertFalse(test_graph.has_connection(test_node_1, test_node_2))
+
+    def test_has_connection_true(self):
+        """ Check if hasConnection() returns true for nodes that are connected
+
+                    Fails if not present: Nothing
+                    Warns if not present: Nothing
+        """
+        test_node_1 = Node(1, 'Node1')
+        test_node_2 = Node(2, 'Node2')
+        test_graph = Graph()
+        test_graph.connect(test_node_1, test_node_2)
+        self.assertTrue(test_graph.has_connection(test_node_1, test_node_2))
+
+    def test_has_connection_true_nodes_changed(self):
+        """ Check if hasConnection() returns true for nodes that are connected (the other way)
+
+                    Fails if not present: Nothing
+                    Warns if not present: Nothing
+        """
+        test_node_1 = Node(1, 'Node1')
+        test_node_2 = Node(2, 'Node2')
+        test_graph = Graph()
+        test_graph.connect(test_node_1, test_node_2)
+        self.assertTrue(test_graph.has_connection(test_node_2, test_node_1))
+
+    def test_disconnect_two_nodes(self):
+        """ Check if it disconnects two nodes and removes the edge from the graphs edges
+
+                    Fails if not present: Nothing
+                    Warns if not present: Nothing
+        """
+        test_node_1 = Node(1, 'Node1')
+        test_node_2 = Node(2, 'Node2')
+        test_graph = Graph()
+        test_graph.connect(test_node_1, test_node_2)
+        test_graph.disconnect(test_node_1, test_node_2)
+        test_edge_list = []
+
+        self.assertEqual(test_edge_list, test_graph.allEdges)
+
+    def test_disconnect_more_nodes(self):
+        """ Check if it disconnects multiple nodes and removes the edges from the graphs edges
+
+                    Fails if not present: Nothing
+                    Warns if not present: Nothing
+        """
+        test_node_1 = Node(1, 'Node1')
+        test_node_2 = Node(2, 'Node2')
+        test_node_3 = Node(3, 'Node3')
+        test_node_4 = Node(4, 'Node4')
+        test_node_5 = Node(5, 'Node5')
+        test_node_6 = Node(6, 'Node6')
+
+        test_edge2 = Edge(test_node_2, test_node_3)
+        test_edge5 = Edge(test_node_5, test_node_6)
+        test_edge6 = Edge(test_node_6, test_node_1)
+
+        test_graph = Graph()
+        test_graph.connect(test_node_1, test_node_2)
+        test_graph.connect(test_node_2, test_node_3)
+        test_graph.connect(test_node_3, test_node_4)
+        test_graph.connect(test_node_4, test_node_5)
+        test_graph.connect(test_node_5, test_node_6)
+        test_graph.connect(test_node_6, test_node_1)
+
+        test_graph.disconnect(test_node_1, test_node_2)
+        test_graph.disconnect(test_node_3, test_node_4)
+        test_graph.disconnect(test_node_4, test_node_5)
+        test_edges_list_after_disconnect = [test_edge2, test_edge5, test_edge6]
+
+        self.assertEqual(test_edges_list_after_disconnect, test_graph.allEdges)
+
+    def test_disconnect_with_nodes_that_are_not_connected(self):
+        """ Check if it raises a ValueError when trying to disconnect two nodes that are not connected
+
+                    Fails if not present: Nothing
+                    Warns if not present: Nothing
+        """
+        test_node_1 = Node(1, 'Node1')
+        test_node_2 = Node(2, 'Node2')
+        test_graph = Graph()
+
+        with self.assertRaises(ValueError):
+            test_graph.disconnect(test_node_1, test_node_2)
+
+    def test_disconnect_with_nodes_that_are_connected_the_other_way(self):
+        """ Check if it disconnects two nodes that are connected (but the other way) and removes the edge from the
+            graphs list
+
+                    Fails if not present: Nothing
+                    Warns if not present: Nothing
+        """
+        test_node_1 = Node(1, 'Node1')
+        test_node_2 = Node(2, 'Node2')
+        test_node_3 = Node(5, 'Node5')
+        test_node_4 = Node(6, 'Node6')
+
+        test_edge1 = Edge(test_node_1, test_node_2)
+        test_edge3 = Edge(test_node_3, test_node_4)
+        test_edge4 = Edge(test_node_4, test_node_1)
+
+        test_graph = Graph()
+        test_graph.connect(test_node_1, test_node_2)
+        test_graph.connect(test_node_2, test_node_3)
+        test_graph.connect(test_node_3, test_node_4)
+        test_graph.connect(test_node_4, test_node_1)
+
+        test_graph.disconnect(test_node_3, test_node_2)
+
+        test_edges_list_after_disconnect = [test_edge1, test_edge3, test_edge4]
+
+        self.assertEqual(test_edges_list_after_disconnect, test_graph.allEdges)
+
+
