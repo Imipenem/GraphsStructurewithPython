@@ -44,7 +44,7 @@ class Graph:
         """
         for node in nodes:
             if self.allNodes.__contains__(node):
-                print('Already added node {} to the graph'.format(node.identifier))
+                raise ValueError('Already added node {} to the graph'.format(node.identifier))
             else:
                 self.allNodes.append(node)
 
@@ -87,7 +87,7 @@ class Graph:
                                 the questionable target node (or source node)
         """
         for edge in self.allEdges:
-            if (edge.source is source or edge.destination is source) and (edge.destination is target or edge.destination
+            if (edge.source is source or edge.destination is source) and (edge.destination is target or edge.source
                                                                           is target):
                 return True
         return False
