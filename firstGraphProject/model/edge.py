@@ -1,8 +1,6 @@
 from firstGraphProject.model.node import Node
-from dataclasses import dataclass, field
 
 
-@dataclass()
 class Edge:
     """
         A class used to represent an Edge
@@ -20,9 +18,18 @@ class Edge:
             Override the __str()__ for proper textual representation of an edge
         """
 
-    source: Node = field(default_factory=Node)
-    destination: Node = field(default_factory=Node)
-    label: str = ""
+    def __init__(self, source: Node, destination: Node):
+        """
+                Parameters
+                ----------
+                source : str
+                    the edges´ source node
+                destination : str
+                    the edges´ destination node
+        """
+        self.source = source
+        self.destination = destination
+        self.label = "connecting node {} with node {}".format(source.identifier, destination.identifier)
 
     def __str__(self):
         """
@@ -31,5 +38,14 @@ class Edge:
                 Parameters
                 ----------
         """
-        label = "connecting node {} with node {}".format(self.source.identifier, self.destination.identifier)
-        return label
+        return self.label
+
+    def __eq__(self, other):
+        """Overrides the default implementation"""
+        if isinstance(other, Edge):
+            return self.label == other.label
+        return NotImplemented
+
+    def __hash__(self):
+        """Overrides the default implementation"""
+        return hash(tuple(sorted(self.__dict__.items())))

@@ -37,7 +37,7 @@ class Node:
         print('This is node {} and my value is {}'.format(self.identifier, self.value))
         print('My incoming edges are:')
         for edge in self.inc_edges:
-            edge.__str__()
+            print(edge.__str__())
         print('My outgoing edges are:')
         for edge in self.out_edges:
-            edge.__str__()
+            print(edge.__str__())

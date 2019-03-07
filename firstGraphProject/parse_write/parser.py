@@ -34,7 +34,7 @@ class Parser:
                     this is the fundamental graph to be parsed from the TGF-file
         """
         node_line_splitted = node_line.split()
-        new_node = Node(node_line_splitted[0], node_line_splitted[1])
+        new_node = Node(int(node_line_splitted[0]), node_line_splitted[1])
         graph.add_node(new_node)
 
     @staticmethod
@@ -54,18 +54,18 @@ class Parser:
                 graph : Graph
                     this is the fundamental graph to be parsed from the TGF-file
         """
-        f = open(path, 'r')
-        delimiter_reached = False
+        with open(path, 'r') as f:
+            delimiter_reached = False
 
-        lines = f.readlines()
-        for line in lines:
-            if line == "#\n":
-                delimiter_reached = True
-                continue
-            if delimiter_reached:
-                Parser.read_edges(line, graph)
-            else:
-                Parser.read_nodes(line, graph)
+            lines = f.readlines()
+            for line in lines:
+                if line == "#\n":
+                    delimiter_reached = True
+                    continue
+                if delimiter_reached:
+                    Parser.read_edges(line, graph)
+                else:
+                    Parser.read_nodes(line, graph)
 
     @staticmethod
     def read_edges(edge_line, graph: Graph):
@@ -88,9 +88,9 @@ class Parser:
         source_node = None
         target_node = None
         for node in graph.allNodes:
-            if node.identifier == edge_line_splitted[0]:
+            if node.identifier == int(edge_line_splitted[0]):
                 source_node = node
-            elif node.identifier == edge_line_splitted[1]:
+            elif node.identifier == int(edge_line_splitted[1]):
                 target_node = node
         if source_node is not None and target_node is not None:
             graph.connect(source_node, target_node)
