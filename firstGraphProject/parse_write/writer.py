@@ -29,10 +29,12 @@ class Writer:
                              the path , the writer pareses the file to given as a command line parameter
         """
 
-        f = open(path, 'w')
-        for node in graph.allNodes:
-            f.write(node.identifier + " " + node.value + "\n")
-        f.write('#' + "\n")
+        with open(path, 'w') as f:
+            for node in graph.allNodes:
+                # f.write(node.identifier + " " + node.value + "\n")
+                f.write("{} {}\n".format(node.identifier, node.value))
+            f.write('#' + "\n")
 
-        for edge in graph.allEdges:
-            f.write(edge.source.identifier + " " + edge.destination.identifier + "\n")
+            for edge in graph.allEdges:
+                # f.write(edge.source.identifier + " " + edge.destination.identifier + "\n")
+                f.write("{} {}\n".format(edge.source.identifier, edge.destination.identifier))

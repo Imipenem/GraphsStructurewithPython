@@ -15,6 +15,8 @@ PATH_TO_TGF_TESTFILE_1 = pf(WD, "data/test_tgf_parser1.txt")
 PATH_TO_TGF_TESTFILE_2 = pf(WD, "data/test_tgf_parser_2.txt")
 PATH_TO_TEST_READ_NODES = pf(WD, "data/test_read_nodes")
 PATH_TO_TEST_READ_EDGES = pf(WD, "data/test_read_edges")
+PATH_TO_TEST_WRITE_TO_TGF_1 = pf(WD, "data/test_write_to_tgf_1")
+PATH_TO_TEST_WRITE_TO_TGF_2 = pf(WD, "data/test_write_to_tgf_2")
 
 
 class TestParserAndWriter(unittest.TestCase):
@@ -30,8 +32,7 @@ class TestParserAndWriter(unittest.TestCase):
 
         test_graph = Graph()
         control_graph = Graph()
-        control_graph.add_node(test_node_1)
-        control_graph.add_node(test_node_2)
+        control_graph.add_node(test_node_1, test_node_2)
         control_graph.connect(test_node_1, test_node_2)
 
         Parser.parse_tgf_file(test_graph, PATH_TO_TGF_TESTFILE_1)
@@ -51,10 +52,7 @@ class TestParserAndWriter(unittest.TestCase):
 
         test_graph = Graph()
         control_graph = Graph()
-        control_graph.add_node(test_node_1)
-        control_graph.add_node(test_node_2)
-        control_graph.add_node(test_node_3)
-        control_graph.add_node(test_node_4)
+        control_graph.add_node(test_node_1, test_node_2, test_node_3, test_node_4)
         control_graph.connect(test_node_1, test_node_2)
         control_graph.connect(test_node_2, test_node_3)
         control_graph.connect(test_node_3, test_node_4)
@@ -88,23 +86,9 @@ class TestParserAndWriter(unittest.TestCase):
         test_node_16 = Node(16, 'Node16')
 
         control_graph = Graph()
-        control_graph.add_node(test_node_1)
-        control_graph.add_node(test_node_2)
-        control_graph.add_node(test_node_3)
-        control_graph.add_node(test_node_4)
-        control_graph.add_node(test_node_5)
-        control_graph.add_node(test_node_6)
-        control_graph.add_node(test_node_7)
-        control_graph.add_node(test_node_8)
-        control_graph.add_node(test_node_9)
-        control_graph.add_node(test_node_10)
-        control_graph.add_node(test_node_11)
-        control_graph.add_node(test_node_12)
-        control_graph.add_node(test_node_13)
-        control_graph.add_node(test_node_14)
-        control_graph.add_node(test_node_15)
-        control_graph.add_node(test_node_16)
-
+        control_graph.add_node(test_node_1, test_node_2, test_node_3, test_node_4, test_node_5, test_node_6,
+                               test_node_7, test_node_8, test_node_9, test_node_10, test_node_11, test_node_12,
+                               test_node_13, test_node_14, test_node_15, test_node_16)
         test_graph = Graph()
 
         Parser.parse_tgf_file(test_graph, PATH_TO_TEST_READ_NODES)
@@ -123,13 +107,65 @@ class TestParserAndWriter(unittest.TestCase):
 
         test_graph = Graph()
         control_graph = Graph()
-        control_graph.add_node(test_node_1)
-        control_graph.add_node(test_node_2)
-        control_graph.add_node(test_node_3)
-        control_graph.add_node(test_node_4)
+        control_graph.add_node(test_node_1, test_node_2, test_node_3, test_node_4)
         control_graph.connect(test_node_1, test_node_2)
         control_graph.connect(test_node_2, test_node_4)
         control_graph.connect(test_node_1, test_node_3)
 
         Parser.parse_tgf_file(test_graph, PATH_TO_TEST_READ_EDGES)
         self.assertEqual(test_graph.allEdges, control_graph.allEdges)
+
+    def test_write_1(self):
+        """ Check if the writer parses the graph into a TGF-format that can be correctly parsed again
+
+            Fails if not present: Nothing
+            Warns if not present: Nothing
+        """
+        test_node_1 = Node(1, 'Node1')
+        test_node_2 = Node(2, 'Node2')
+        test_graph_write = Graph()
+        control_graph = Graph()
+
+        test_graph_write.add_node(test_node_1, test_node_2)
+        test_graph_write.connect(test_node_1, test_node_2)
+
+        Writer.write_to_tgf(test_graph_write, PATH_TO_TEST_WRITE_TO_TGF_1)
+
+        Parser.parse_tgf_file(control_graph, PATH_TO_TEST_WRITE_TO_TGF_1)
+
+        self.assertEqual(control_graph.allNodes, test_graph_write.allNodes)
+        self.assertEqual(control_graph.allEdges, test_graph_write.allEdges)
+
+    def test_write_2(self):
+        """ Check if the writer parses the graph into a TGF-format that can be correctly parsed again
+
+            Fails if not present: Nothing
+            Warns if not present: Nothing
+        """
+        test_node_1 = Node(1, 'Node1')
+        test_node_2 = Node(2, 'Node2')
+        test_node_3 = Node(3, 'Node3')
+        test_node_4 = Node(4, 'Node4')
+        test_node_5 = Node(5, 'Node5')
+        test_node_6 = Node(6, 'Node6')
+        test_node_7 = Node(7, 'Node7')
+        test_node_8 = Node(8, 'Node8')
+
+        control_graph = Graph()
+        test_graph_write = Graph()
+        test_graph_write.add_node(test_node_1, test_node_2, test_node_3, test_node_4, test_node_5, test_node_6,
+                                  test_node_7, test_node_8)
+        test_graph_write.connect(test_node_1, test_node_2)
+        test_graph_write.connect(test_node_2, test_node_8)
+        test_graph_write.connect(test_node_6, test_node_7)
+        test_graph_write.connect(test_node_7, test_node_8)
+        test_graph_write.connect(test_node_4, test_node_7)
+        test_graph_write.connect(test_node_1, test_node_5)
+        test_graph_write.connect(test_node_3, test_node_1)
+
+        Writer.write_to_tgf(test_graph_write, PATH_TO_TEST_WRITE_TO_TGF_2)
+
+        Parser.parse_tgf_file(control_graph, PATH_TO_TEST_WRITE_TO_TGF_2)
+
+        self.assertEqual(test_graph_write.allNodes, control_graph.allNodes)
+        self.assertEqual(test_graph_write.allEdges, control_graph.allEdges)
